@@ -6,5 +6,5 @@
 * Catogorize spendings,
 * Get suggestions about your budget,
 * Visual charts,
-* Aestethic layout,
+* Aesthetic layout,
 * Encourage you to save
