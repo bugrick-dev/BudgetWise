@@ -53,6 +53,7 @@ budgetwise/
     python -m venv venv
     source venv/bin/activate   # Mac/Linux
     venv\Scripts\activate      # Windows 
+    export FLASK_APP=app.py # Set environment variables
     ````
 3. **Install dependencies**  
     ```bash
@@ -67,7 +68,7 @@ budgetwise/
     ```
 5. **Run Server**  
     ```bash
-    python app.py
+    flask run
     ```
 6. **Open in your browser** 
     ```
