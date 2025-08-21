@@ -47,14 +47,14 @@ budgetwise/
 1. **Clone the repo**  
    ```bash
    git clone https://github.com/yourusername/budgetwise.git
-   cd budgetwise ```
+   cd budgetwise
 2. **Create a virtual environment**  
     ```bash
     python -m venv venv
     source venv/bin/activate   # Mac/Linux
     venv\Scripts\activate      # Windows 
     export FLASK_APP=app.py # Set environment variables
-    ````
+    ```
 3. **Install dependencies**  
     ```bash
     pip install -r requirements.txt
