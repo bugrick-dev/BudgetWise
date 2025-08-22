@@ -5,3 +5,5 @@
 !app.py
 !templates/
 !static/
+!requirements.txt
+!README.md
