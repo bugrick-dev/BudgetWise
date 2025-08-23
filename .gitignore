@@ -1,7 +1,6 @@
 # Ignore everything
 *
 # Except the following files and directories
-!.gitignore
 !app.py
 !templates/
 !templates/*.html
