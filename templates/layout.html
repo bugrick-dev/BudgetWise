@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BudgetWise</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+    <!-- Add your CSS links here -->
+</head>
+<body>
+
+     <div class="container">
+        <header>
+            <!-- Navigation bar here -->
+            <navbar class="navbar">
+
+                <div class="navbar-brand">
+                    <a class="navbar-item" href="{{ url_for('index') }}">
+                        <h1 class="title is-4">BudgetWise</h1>
+                    </a>
+                </div>
+                <div class="navbar-menu">
+                    {% if session['username'] %}
+                    <div class="navbar-start">
+                        <a class="navbar-item" href="/">Dashboard</a>
+                        <a class="navbar-item" href="/transactions">Transactions</a>
+                        <a class="navbar-item" href="/reports">Reports</a>
+                        <a class="navbar-item" href="/settings">Settings</a>
+                    </div>
+                </div>
+
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        Welcome, {{ session['username'] }}!
+                    </div>
+                    <a class="button navbar-item" href="/logout">Log out</a>
+                </div>
+                {% else %}
+                <div class="navbar-end">
+                    <a class="navbar-item" href="https://github.com/bugrick-dev/BudgetWise">BudgetWise by bugrick</a>
+                </div>
+                {% endif %}
+            </navbar>
+        </header>
+        
+        <main>
+
+            {% block content %}
+            <!-- Page-specific content will be injected here -->
+            {% endblock %}
+
+        </main>
+
+    <footer>
+    </footer>
+    </div>
+</body>
+    
+</html>

@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+
+{% if session['username'] %}
 <div class="grid is-mobile is-desktop is-multiline">
         <div class="cell box">
             <img src="https://placehold.co/300" alt="Placeholder Image">
@@ -11,4 +13,14 @@
             <img src="https://placehold.co/300" alt="Placeholder Image">
         </div>
 </div>
+{% else %}
+    <div id="welcome">    
+        <div class="box" style="width: fit-content; height: 100%; padding: 2rem;">
+            <h2 class="title">Welcome to BudgetWise!</h2>
+            <div style="justify-content: center; align-items: center; display: flex; gap: 1rem;">
+                <a class="button is-light" href="/login">Log in</a> or <a class="button is-primary" href="/signup">Sign up</a>
+            </div>
+        </div>
+    </div>
+{% endif %}
 {% endblock %}

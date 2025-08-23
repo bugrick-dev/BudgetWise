@@ -4,6 +4,11 @@
 !.gitignore
 !app.py
 !templates/
-!static/css
+!templates/*.html
+!static/
+!static/css/
+!static/css/*.css
+!static/*png
 !requirements.txt
 !README.md
+!budgetwise.db
