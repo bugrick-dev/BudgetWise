@@ -87,4 +87,4 @@ Passwords are stored securely using `werkzeug.security.generate_password_hash`.
 📊 Export reports as PDF/CSV  
 👥 Shared accounts for group budgeting  
 
-
+📱Will come to mobile devices!
