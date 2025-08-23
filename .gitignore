@@ -4,6 +4,6 @@
 !.gitignore
 !app.py
 !templates/
-!static/
+!static/css
 !requirements.txt
 !README.md
