@@ -2,12 +2,12 @@
 
 {% block content %}
 <div style="text-align: center; margin-top: 1rem;">
-    <h1 class="title">Sign Up</h1>
+    <h1 class="title">Login</h1>
 </div>
 
 <div class="box" style="max-width: 400px; margin: auto; margin-top: 1rem;">
     
-    <form method="post" action="/signup">
+    <form method="post" action="/login">
         <div class="field">
             <label class="label">Username</label>
                 <div class="control">
@@ -21,19 +21,12 @@
                     <input required class="input" type="password" placeholder="Type Here" name="password">
                 </div>
         </div>
-
-        <div class="field">
-            <label class="label">Confirm Password</label>
-                <div class="control">
-                    <input required class="input" type="password" placeholder="Type Here" name ="confirm_password">
-                </div>
-        </div>
             {% if error %}
                 <p class="has-text-danger">{{ error }}</p>
             {% endif %}
         <div class="field" style="text-align: center; margin-top: 1rem;">
             <div class="control">
-                <button class="button is-primary" type="submit">Sign Up</button>
+                <button class="button is-primary" type="submit">Login</button>
             </div>
         </div>
     </form>
