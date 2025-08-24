@@ -12,6 +12,41 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 Session(app)
 
+
+class Users(db.Model):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    username = db.Column(db.String(80), unique=True, nullable=False)
+    password = db.Column(db.String(200), nullable=False)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+class Categories(db.Model):
+    __tablename__ = 'categories'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    name = db.Column(db.String(80), unique=True, nullable=False) #user adds categories
+    type = db.Column(db.String(10), nullable=False) # income or expense
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    
+class Accounts(db.Model):
+    __tablename__ = 'accounts'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False, ondelete='CASCADE')
+    account_name = db.Column(db.String(80), nullable=False)
+    balance = db.Column(db.Float, default=0.0)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+
+
+class Transactions(db.Model):
+    __tablename__ = 'transactions'
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable=False, ondelete='CASCADE')
+    amount = db.Column(db.Float, nullable=False)
+    description = db.Column(db.String(300))
+    transaction_date = db.Column(db.DateTime, nullable=False)
+    category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+
+
+
 @app.route("/")
 def index():
     return render_template("index.html", session=session)
@@ -42,4 +77,6 @@ def signup():
 
 
 if __name__ == "__main__":
+    with app.app_context():
+        db.create_all()
     app.run(debug=True)

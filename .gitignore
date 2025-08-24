@@ -7,7 +7,6 @@
 !static/
 !static/css/
 !static/css/*.css
-!static/*png
+!static/*.png
 !requirements.txt
 !README.md
-!budgetwise.db
