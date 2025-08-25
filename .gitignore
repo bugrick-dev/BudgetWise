@@ -10,3 +10,4 @@
 !static/*.png
 !requirements.txt
 !README.md
+!helpers.py
