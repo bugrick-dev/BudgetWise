@@ -14,24 +14,26 @@ body {
     font-style: normal;
     background-size: cover;
     color: black;
-    height: 100vh; /* Set a specific height for flexbox to work */
+    height: fit-content; /* Set a specific height for flexbox to work */
     display: flex; /* Enable Flexbox layout */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     margin: 0; /* Remove default body margin */
 }
+
 .container {
     background: rgba(255, 255, 255, 0.10);
     width: 90%;
     height: 90%;
-    
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     border-style: solid;
     border-color: rgba(255, 255, 255, 0.18);
     border-width: 1px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    margin: 2rem;
 }
+
 header {
     background-color: #eeeeee;
     color: white;
@@ -40,6 +42,7 @@ header {
     background: none;
     width: 100%;
 }
+
 .navbar {
     background-color: #EEEEEE;
     width: 100%;
@@ -48,6 +51,7 @@ header {
     border-top-right-radius: 1rem;
 
 }
+
 .navbar-item {
     width: auto;
     border-radius: 1rem;
@@ -58,11 +62,15 @@ header {
     opacity: 0.8;
     background-color: #FAF9EE;
     margin: 0.8rem;
+    padding: .5rem;
+    display: flex;
 }
+
 .navbar-item:hover {
     background-color: #e6e6e6;
     color: #333333;
 }
+
 #signup {
     background-color: #A2AF9B;
     color: white;

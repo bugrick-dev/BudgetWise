@@ -3,15 +3,41 @@
 
 {% if user %}
 <div class="grid is-mobile is-desktop is-multiline">
-        <div class="cell box">
-            <img src="https://placehold.co/300" alt="Placeholder Image">
+    <div class="column">
+        <div class="cell">
+            <div class="box">
+                <img src="https://placehold.co/300" alt="Placeholder Image">
+            </div>
         </div>
-        <div class="cell box">
-            <img src="https://placehold.co/300" alt="Placeholder Image">
+        <div class="column">
+            <div class="cell">
+                <div class="box">
+                    <img src="https://placehold.co/300" alt="Placeholder Image">
+                </div>
+            </div>
         </div>
-        <div class="cell box">
-            <img src="https://placehold.co/300" alt="Placeholder Image">
+    </div>
+    <div class="column">
+        <div class="cell">
+            <div class="box" style="padding: 1rem;">
+                <div class="column" style="display: flex; flex-direction: column; ">
+                    <div style="white-space: nowrap;">
+                        <h2 class="subtitle" style="font-size: 2vw">Net Balance</h2>
+                        <h1 class="title" style="font-size: 5vw">$5,000.00</h1>
+                    </div>
+                </div>
+                  
+            </div>
         </div>
+        <div class="column">
+            <div class="cell">
+                <div class="box">
+                <img src="https://placehold.co/300" alt="Placeholder Image">
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>
 {% else %}
     <div id="welcome">    
