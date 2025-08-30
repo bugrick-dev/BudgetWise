@@ -1,0 +1,96 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div style="text-align: center; margin-top: 1rem;">
+    <h1 class="title">Settings</h1>
+</div>
+
+
+
+<div class="box" style="max-width: 450px; height: 100%; margin: auto; margin-top: 3rem;">
+    <form method="post" action="/settings">
+        <div class="field">
+            <label class="subtitle">Change Username</label>
+                <div class="control">
+                    <input class="input is-rounded" type="text" placeholder="New Username" name="username">
+                </div>
+        </div>
+        <div class="field">
+            <label class="subtitle">Change Password</label>
+                <div class="control">
+                    <input class="input is-rounded" type="password" placeholder="Old Password" name="old-password">
+                </div>
+                <div class="control">
+                    <input class="input is-rounded" type="password" placeholder="New Password" name="new-password">
+                </div>
+        </div>
+        
+        <div class="field">
+            <label class="subtitle">Currency</label>
+            <div class="control">
+            <div class="select is-rounded">
+                <select name="currency">
+                    <option value="usd">USD</option>
+                    <option value="eur">EUR</option>
+                    <option value="yen">YEN</option>
+                </select>
+            </div>
+            </div>
+        </div>
+        
+        <div class="field is-grouped is-grouped-centered" style="margin-top: 1rem;">
+            <div class="control">
+                <button id="save-button" class="button is-primary is-rounded" type="submit">Save Changes</button>
+            </div>
+        </div>
+
+        <div class="field is-grouped is-grouped-centered" style="margin-top: 1rem;">
+            <div class="control">
+                <button id="delete-button" class="button is-danger is-rounded" type="button">Delete Account</button>
+            </div>
+        </div>
+    </form>
+    <div id="delete-modal" class="modal" style="border-radius: 1rem;">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="box has-text-centered">
+            <h3 class="title is-4">Are you sure?</h3>
+            <p>This action cannot be undone. All of your accounts and transactions will be permanently deleted.</p>
+            <br>
+            <form method="post" action="/delete_account" style="display: inline-block;">
+                <input type="hidden" name="confirm_delete" value="true">
+                <button class="button is-danger is-rounded" type="submit">Yes, Delete My Account</button>
+            </form>
+            <button id="cancel-delete" class="button is-light is-rounded" style="margin-left: 10px;">Cancel</button>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const deleteButton = document.getElementById('delete-button');
+        const deleteModal = document.getElementById('delete-modal');
+        
+        // Ensure the modal and button elements exist before adding listeners
+        if (deleteModal && deleteButton) {
+            deleteButton.addEventListener('click', () => {
+                deleteModal.classList.add('is-active');
+            });
+
+            // Function to close the modal
+            const hideModal = () => {
+                deleteModal.classList.remove('is-active');
+            };
+
+            // Add event listeners to all close buttons
+            const closeButtons = deleteModal.querySelectorAll('.modal-close, #cancel-delete, .modal-background');
+            closeButtons.forEach(button => {
+                button.addEventListener('click', hideModal);
+            });
+        }
+    });
+</script>
+
+{% endblock %}

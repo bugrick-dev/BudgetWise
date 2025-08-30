@@ -5,6 +5,14 @@ a:focus,
     box-shadow: 0 0 0 2px currentColor; /* Use currentColor for a box-shadow that matches the text color */
 }
 
+.is-primary {
+    background-color: #A2AF9B;
+    color: white;
+}
+.is-danger {
+    background-color: #E76F51;
+    color: white;
+}
 /* Light mode */
 body {
     background-image: url('../background-light.png');
@@ -14,17 +22,19 @@ body {
     font-style: normal;
     background-size: cover;
     color: black;
-    height: fit-content; /* Set a specific height for flexbox to work */
+    height: 100%; /* Set a specific height for flexbox to work */
     display: flex; /* Enable Flexbox layout */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     margin: 0; /* Remove default body margin */
+
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.10);
+    
     width: 90%;
     height: 90%;
+    background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 1rem;
     border-style: solid;
@@ -33,6 +43,12 @@ body {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     margin: 2rem;
 }
+
+.content {
+    
+    background: none;
+    min-height: 70vh;
+}   
 
 header {
     background-color: #eeeeee;
@@ -62,8 +78,10 @@ header {
     opacity: 0.8;
     background-color: #FAF9EE;
     margin: 0.8rem;
-    padding: .5rem;
-    display: flex;
+    padding: 1rem;
+}
+.control {
+    margin: 0.5rem;
 }
 
 .navbar-item:hover {
@@ -95,6 +113,10 @@ header {
 header {
     background-color: #222831;
     color: #76ABAE;
+}
+.is-primary {
+    background-color: #76ABAE;
+    color: white;
 }
 .navbar {
     background-color: #222831;

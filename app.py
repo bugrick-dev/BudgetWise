@@ -3,7 +3,7 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 
-from helpers import login_required
+from helpers import login_required, usd
 
 app = Flask(__name__)
 
@@ -124,6 +124,24 @@ def login():
 def logout():
     session.clear()
     return redirect(url_for("index"))
+
+@app.route("/settings", methods=["GET", "POST"])
+@login_required
+def settings():
+    return render_template("settings.html")
+
+@app.route("/delete_account", methods=["POST"])
+@login_required
+def delete_account():
+    user_id = session.get("user_id")
+    if user_id:
+        user = User.query.get(user_id)
+        if user:
+            db.session.delete(user)
+            db.session.commit()
+            session.clear()
+            return redirect(url_for("index"))
+    return redirect(url_for("settings"))
 
 def init_db():
     db.create_all()
