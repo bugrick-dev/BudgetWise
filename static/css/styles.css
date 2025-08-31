@@ -31,7 +31,7 @@ body {
 }
 
 .container {
-    
+
     width: 90%;
     height: 90%;
     background: rgba(255, 255, 255, 0.05);
@@ -45,7 +45,7 @@ body {
 }
 
 .content {
-    
+    text-align: center;
     background: none;
     min-height: 70vh;
 }   

@@ -1,0 +1,84 @@
+{% extends "layout.html" %}
+{% block content %}
+<div style="text-align: center; margin-top: 1rem;">
+    <h1 class="title">My Accounts</h1>
+    <button id="add-account-button" class="button is-primary is-rounded is-large" style="margin-top: 1rem;">Add Account</button>
+</div>
+
+<div id="add-account-modal" class="modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <form method="post" action="/add_account">
+        
+        <div class="field">
+          <label class="label">Account Name</label>
+          <div class="control">
+            <input class="input" type="text" name="account_name" placeholder="Account Name" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Balance</label>
+          <div class="control">
+            <input class="input" type="number" name="balance" placeholder="Balance" required>
+          </div>
+        </div>
+
+
+        <div class="field is-grouped is-grouped-centered" style="margin-top: 1rem;">
+          <div class="control">
+            <button class="button is-primary is-rounded" type="submit">Add Account</button>
+          </div>
+          <div class="control">
+            <button type="button" class="button is-light is-rounded" id="cancel-button">Cancel</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<table class="table is-fullwidth is-striped is-hoverable" style="margin-top: 2rem;">
+    <thead>
+        <tr>
+            <th>Account Name</th>
+            <th>Balance</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for account in accounts %}
+        <tr>
+            <td>{{ account.name }}</td>
+            <td>${{ '%.2f'|format(account.balance) }}</td>
+            <td>
+                <a class="button is-small is-info is-rounded" href="/edit_account/{{ account.id }}">Edit</a>
+                <a class="button is-small is-danger is-rounded" href="/delete_account/{{ account.id }}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const addAccountButton = document.getElementById('add-account-button');
+    const modal = document.getElementById('add-account-modal');
+    const cancelButton = document.getElementById('cancel-button');
+    const modalClose = modal.querySelector('.modal-close');
+
+    addAccountButton.addEventListener('click', () => {
+        modal.classList.add('is-active');
+    });
+
+    cancelButton.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+
+    modalClose.addEventListener('click', () => {
+        modal.classList.remove('is-active');
+    });
+});
+</script>
+{% endblock %}

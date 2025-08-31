@@ -127,7 +127,7 @@ def logout():
 
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
-def settings():
+def settings(): #TODO
     return render_template("settings.html")
 
 @app.route("/delete_account", methods=["POST"])
@@ -142,6 +142,18 @@ def delete_account():
             session.clear()
             return redirect(url_for("index"))
     return redirect(url_for("settings"))
+
+@app.route("/transactions")
+@login_required
+def transactions():
+    return render_template("transactions.html")
+
+@app.route("/accounts")
+@login_required
+def accounts():
+    user_id = session.get("user_id")
+    accounts = Account.query.filter_by(user_id=user_id).all()
+    return render_template("accounts.html", accounts=accounts)
 
 def init_db():
     db.create_all()
