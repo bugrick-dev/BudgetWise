@@ -1,3 +1,5 @@
+@import 'bulma.css';
+
 /* Global styles for light and dark mode */
 a:focus,
 .navbar-item:focus {
@@ -6,7 +8,7 @@ a:focus,
 }
 
 .is-primary {
-    background-color: #A2AF9B;
+    background-color: #A6B37D;
     color: white;
 }
 .is-danger {
@@ -48,6 +50,8 @@ body {
     text-align: center;
     background: none;
     min-height: 70vh;
+    height: fit-content;
+
 }   
 
 header {

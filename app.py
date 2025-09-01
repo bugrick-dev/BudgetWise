@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
@@ -26,7 +26,6 @@ class Category(db.Model):
     __tablename__ = 'categories'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), unique=True, nullable=False) #user adds categories
-    type = db.Column(db.String(10), nullable=False) # income or expense
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     
 class Account(db.Model):
@@ -46,6 +45,7 @@ class Transaction(db.Model):
     description = db.Column(db.String(300))
     transaction_date = db.Column(db.DateTime, nullable=False)
     category_id = db.Column(db.Integer, db.ForeignKey('categories.id'), nullable=False)
+
 
 
 @app.after_request
@@ -128,11 +128,48 @@ def logout():
 @app.route("/settings", methods=["GET", "POST"])
 @login_required
 def settings(): #TODO
+
+    if request.method == "POST":
+
+        new_username = request.form.get("username")
+        current_password = request.form.get("old-password")
+        new_password = request.form.get("new-password")
+        new_category = request.form.get("new-category")
+
+        user = User.query.filter_by(id=session.get("user_id")).first()
+
+
+        if new_category:
+            add_category = Category(name=new_category)
+            db.session.add(add_category)
+
+        change_flag = False
+
+        if check_password_hash(user.password_hash, current_password):
+            if current_password == new_password:
+                user.password_hash = generate_password_hash(new_password)
+                change_flag = True
+
+        if new_username:
+            user.username = new_username
+            change_flag = True
+
+        if change_flag:
+            db.session.commit()
+            session.clear()
+
+        flash("Changes Saved!")
+        return redirect(url_for("index"))
+
     return render_template("settings.html")
 
-@app.route("/delete_account", methods=["POST"])
+
+
+
+
+@app.route("/delete_user", methods=["POST"])
 @login_required
-def delete_account():
+def delete_user():
     user_id = session.get("user_id")
     if user_id:
         user = User.query.get(user_id)
@@ -154,6 +191,37 @@ def accounts():
     user_id = session.get("user_id")
     accounts = Account.query.filter_by(user_id=user_id).all()
     return render_template("accounts.html", accounts=accounts)
+
+@app.route("/add_account", methods=["POST"])
+@login_required
+def add_account():
+    account_name = request.form.get("account_name")
+    balance = request.form.get("balance", type=float, default=0.0)
+    user_id = session.get("user_id")
+    if not account_name:
+        flash("Account name is required", "danger")
+        return redirect(url_for("accounts"))
+    if Account.query.filter_by(user_id=user_id, account_name=account_name).first():
+        flash("Account with this name already exists", "danger")
+        return redirect(url_for("accounts"))
+    new_account = Account(user_id=user_id, account_name=account_name, balance=balance) # pyright: ignore[reportCallIssue]
+    db.session.add(new_account)
+    db.session.commit()
+    flash("Account Added Successfully", "success")
+    return redirect(url_for("accounts"))
+
+@app.route("/delete_account/<int:account_id>", methods=["GET","POST"])
+@login_required
+def delete_account(account_id):
+    user_id = session.get("user_id")
+    account = Account.query.filter_by(id=account_id, user_id=user_id).first()
+    if account:
+        db.session.delete(account)
+        db.session.commit()
+        flash("Account Deleted Successfully", "success")
+        return redirect(url_for("accounts"))  
+    flash("Account Delete Error", "danger")
+    return redirect(url_for("accounts"))
 
 def init_db():
     db.create_all()
