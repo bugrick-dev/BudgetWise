@@ -12,7 +12,7 @@
         <div class="field">
             <label class="subtitle">Change Username</label>
                 <div class="control">
-                    <input class="input is-rounded" type="text" placeholder="New Username" name="username">
+                    <input class="input is-rounded" autocomplete="off" type="text" placeholder="New Username" name="username">
                 </div>
         </div>
         <div class="field">
@@ -25,15 +25,6 @@
                 </div>
         </div>
         
-        <div class="field">
-            <label class="subtitle">Add Category</label>
-            <div class="control">
-            <div class="is-rounded">
-                <input class="input is-rounded" type="text" placeholder="New Category" name="new-category">
-                
-            </div>
-            </div>
-        </div>
         
         <div class="field is-grouped is-grouped-centered" style="margin-top: 1rem;">
             <div class="control">
@@ -48,22 +39,22 @@
         </div>
     </form>
 
-    <div id="delete-modal" class="modal" style="border-radius: 1rem;">
-    <div class="modal-background"></div>
-    <div class="modal-content">
-        <div class="box has-text-centered">
-            <h3 class="title is-4">Are you sure?</h3>
-            <p>This action cannot be undone. All of your accounts and transactions will be permanently deleted.</p>
-            <br>
-            <form method="post" action="/delete_user" style="display: inline-block;">
-                <input type="hidden" name="confirm_delete" value="true">
-                <button class="button is-danger is-rounded" type="submit">Yes, Delete My Account</button>
-            </form>
-            <button id="cancel-delete" class="button is-light is-rounded" style="margin-left: 10px;">Cancel</button>
-        </div>
-    </div>
-    <button class="modal-close is-large" aria-label="close"></button>
 </div>
+<div id="delete-modal" class="modal" style="border-radius: 1rem;">
+<div class="modal-background"></div>
+<div class="modal-content">
+    <div class="box has-text-centered">
+        <h3 class="title is-4">Are you sure?</h3>
+        <p>This action cannot be undone. All of your accounts and transactions will be permanently deleted.</p>
+        <br>
+        <form method="post" action="/delete_user" style="display: inline-block;">
+            <input type="hidden" name="confirm_delete" value="true">
+            <button class="button is-danger is-rounded" type="submit">Yes, Delete My Account</button>
+        </form>
+        <button id="cancel-delete" class="button is-light is-rounded" style="margin-left: 10px;">Cancel</button>
+    </div>
+</div>
+<button class="modal-close is-large" aria-label="close"></button>
 </div>
 
 <script>

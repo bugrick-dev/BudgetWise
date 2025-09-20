@@ -3,39 +3,126 @@
 
 {% if user %}
 <!-- Main Grid -->
-<div class="grid is-mobile is-desktop is-multiline is-flex">
-    <div class="column is-one-half-desktop is-full-mobile">
-        <div class="cell">
-            <div class="box">
-                <img src="https://placehold.co/300" alt="Placeholder Image">
-            </div>
-        </div>
-        <div class="cell">
-            <div class="box">
-                <img src="https://placehold.co/300" alt="Placeholder Image">
-            </div>
-        </div>
-    </div>
-    <!-- Net Balance Box -->
-    <div class="column is-one-half-desktop is-full-mobile">
-        <div class="cell">
-            <div class="box" style="padding: 1rem; text-align: left;">
-                    <div style="white-space: nowrap;">
-                        <h2 class="subtitle" style="font-size: 2vw; margin-bottom: 0;">Net Balance</h2>
-                        <h1 class="title" style="font-size: 5vw; margin-top: 1rem; margin-bottom: 1rem;">$5,000.00</h1>
-                    </div>
-            </div>
-        </div>
+<div class="columns is-multiline is-desktop is-flex is-align-items-stretch">
 
-        <div class="cell">
-            <div class="box">
-            <img src="https://placehold.co/300" alt="Placeholder Image">
+                <!-- Left Column for Charts -->
+                <div class="column is-one-half-desktop is-full-mobile is-flex is-flex-direction-column">
+                    <div class="box is-flex is-flex-grow-1">
+                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin-top: 1rem;">
+                            {% if flag %}
+                            <canvas id="donutChart"></canvas>
+                            {% else %}
+                            <h1 class="title">There is nothing to show</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="box is-flex is-flex-grow-1">
+                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin-top: 1rem;">
+                            {% if flag %}
+                            <canvas id="lineChart"></canvas>
+                            {% else %}
+                            <h1 class="title">There is nothing to show</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+
+                <!-- Right Column for Net Balance and Transactions -->
+                <div class="column is-one-half-desktop is-full-mobile is-flex is-flex-direction-column">
+                    <!-- Net Balance Box -->
+                    <div class="box" style="padding: 1rem; text-align: left;">
+                        <div style="white-space: nowrap;">
+                            <h2 class="subtitle" style="font-size: 2vw; margin-bottom: 0;">Net Balance</h2>
+                            <h1 class="title" style="font-size: 5vw; margin-top: 1rem; margin-bottom: 1rem;">{{ usd(net_balance, None) }}</h1>
+                        </div>
+                    </div>
+
+                    <!-- Transactions Table -->
+                    <div class="box" id="transactions-table" style="text-align: left;">
+                        <h1 class="subtitle">Recent Transactions</h1>
+                        {% if flag %}
+                        <table class="table is-fullwidth is-striped is-hoverable" style="text-align: center;">
+                            <tbody>
+                                {% for account, transaction in transactions  %}
+                                    <tr>
+                                        <td style="text-align: left; font-size: larger;">{{ account.account_name }}</td>
+                                        <td style="text-align: right; font-size: larger;">{{ usd(transaction.amount, transaction.transaction_type) }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <h1 class="title">There is nothing to show</h1>
+                        {% endif %}
+                    </div>
+                </div>
             </div>
-        </div>
-        
-    </div>
-</div>
+            
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+        const donutChartData = JSON.parse('{{ chart_data | tojson }}')
+
+        const labels = donutChartData.map(item => item.category);
+        const data = donutChartData.map(item => item.amount);
+
+
+        new Chart(
+            document.getElementById('donutChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+            datasets: [{
+                label: 'Total Amount',
+                data: data,
+                backgroundColor: [
+                'rgba(152, 225, 138, 0.85)',
+                'rgba(242, 190, 150, 0.85)',
+                'rgba(160, 210, 230, 0.85)',
+                'rgba(210, 160, 120, 0.85)',
+                'rgba(235, 215, 190, 0.85)'
+                ],
+                hoverOffset: 4
+            }]
+                }
+            }
+        );
+
+        const lineChartData = JSON.parse('{{ lineChartData | tojson }}')
+
+        const lineLabels = lineChartData.map(line => line.month);
+        const lineData = lineChartData.map(line => line.amount);
+
+        new Chart(
+            document.getElementById('lineChart'), {
+                type: 'line',
+                data: {
+                    labels: lineLabels,
+                    datasets: [{
+                    label: 'Total Spendings by Month',
+                    // Add your data points here (e.g., [10, 25, 18])
+                    data: lineData, 
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)', // blue-500 with transparency
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    borderWidth: 2,
+                    tension: 0.4, // Adds a slight curve to the line
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    pointHoverBorderColor: 'rgba(220,220,220,1)',
+                    pointRadius: 3,
+                }] 
+                }
+            }
+        )
+
+
+    });
+    </script>
 {% else %}
+
     <div id="welcome">    
         <div class="box" style="width: fit-content; height: 100%; padding: 2rem;">
             <h2 class="title">Welcome to BudgetWise!</h2>
@@ -44,5 +131,8 @@
             </div>
         </div>
     </div>
+
 {% endif %}
+
+
 {% endblock %}

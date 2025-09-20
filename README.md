@@ -2,25 +2,26 @@
 A simple **personal finance tracker** built with Flask, SQLite, and Chart.js.  
 BudgetWise helps you **log transactions, categorize expenses, visualize spending trends**, and set savings goals.  
 
+![Welcome Page](screenshots/welcome.png)
+
 ---
 
 ## 🚀 Features
 - 🔐 User authentication (register/login/logout with hashed passwords)  
-- ➕ Add manual transactions (amount, category, description, date)  
-- 📂 Upload CSV bank statements for quick imports  
-- 🏷️ Auto-categorization suggestions based on keywords  
+- 🌑 Dark mode and 🌕 Light mode support
+- ➕ Add manual transactions (amount, category, description, date)    
 - 📊 Interactive dashboard with **Chart.js**:
   - Pie chart of spending by category  
-  - Line chart of expenses over time  
-- 🎯 Optional: savings goals tracking  
+  - Line chart of expenses over time
+    
 
 ---
 
 ## 🛠️ Tech Stack
 - **Backend:** Python, Flask  
-- **Database:** SQLite  
-- **Frontend:** HTML, Bootstrap, Chart.js  
-- **Extras:** Pandas/CSV for file parsing, Werkzeug for password hashing  
+- **Database:** SQLite, SQLAlchemy  
+- **Frontend:** HTML, Bulma, Chart.js  
+- **Extras:**  Werkzeug for password hashing  
 
 ---
 
@@ -80,11 +81,12 @@ Passwords are stored securely using `werkzeug.security.generate_password_hash`.
 ## 📊 Example Dashboard
 **Pie Chart:** Spending distribution across categories  
 **Line Chart:** Monthly spending trend  
-(screenshot placeholder — add your own)
+
+![Dashboard View](screenshots/dashboard.png)
+
 ## 📝 Future Improvements
 🔄 Currency conversion API integration  
 📱 Mobile-friendly dashboard view  
 📊 Export reports as PDF/CSV  
 👥 Shared accounts for group budgeting  
-
 📱Will come to mobile devices!

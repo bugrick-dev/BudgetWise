@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>BudgetWise</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="{{ url_for('static', filename='../static/chart.min.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/bulma.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-    <!-- Add your CSS links here -->
+
 </head>
 <body>
     {% with messages = get_flashed_messages(with_categories=true) %}
@@ -34,7 +34,7 @@
                     </a>
                 </div>
                 <div class="navbar-menu">
-                    {% if session['username'] %}
+                    {% if session["user_id"] %}
                     <div class="navbar-start">
                         <a class="navbar-item" href="/">Dashboard</a>
                         <a class="navbar-item" href="/accounts">My Accounts</a>
@@ -57,7 +57,7 @@
             </navbar>
         </header>
         
-        <main class="section" >
+        <main class="section">
             <div class="content">
             {% block content %}
             <!-- Page-specific content will be injected here -->

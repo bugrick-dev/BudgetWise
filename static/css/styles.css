@@ -24,18 +24,20 @@ body {
     font-style: normal;
     background-size: cover;
     color: black;
-    height: 100%; /* Set a specific height for flexbox to work */
+    height: 100vh; /* Set a specific height for flexbox to work */
     display: flex; /* Enable Flexbox layout */
     justify-content: center; /* Center horizontally */
     align-items: center; /* Center vertically */
     margin: 0; /* Remove default body margin */
-
+    min-height: fit-content;
 }
+
 
 .container {
 
     width: 90%;
     height: 90%;
+    min-height: fit-content;
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     border-radius: 1rem;
@@ -43,7 +45,7 @@ body {
     border-color: rgba(255, 255, 255, 0.18);
     border-width: 1px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    margin: 2rem;
+    margin: auto;
 }
 
 .content {
@@ -51,7 +53,7 @@ body {
     background: none;
     min-height: 70vh;
     height: fit-content;
-
+    margin: auto;
 }   
 
 header {
@@ -84,6 +86,8 @@ header {
     margin: 0.8rem;
     padding: 1rem;
 }
+
+
 .control {
     margin: 0.5rem;
 }
@@ -102,11 +106,12 @@ header {
     justify-content: center; 
     align-items: center; 
     margin-top: 2rem; 
-    width: 100%; 
-    height: 100%; 
+    width: 90%; 
+    height: 90%; 
     border: none;
-    margin: 10% 0 10% 0;
-    padding: 2rem;
+    margin: auto;
+    padding: 5rem;
+    min-height: fit-content;
 }
 /* Dark mode */
 @media (prefers-color-scheme: dark) {

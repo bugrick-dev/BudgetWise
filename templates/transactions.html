@@ -2,12 +2,12 @@
 
 {% block content %}
 
-<div style="text-align: center; margin-top: 1rem;">
+<div style="text-align: center; margin: auto; margin-top: 1rem;">
     <h1 class="title">Transactions</h1>
-    <button class="button is-primary is-large is-rounded" id="add-transaction" style="margin-top: 1rem;">Add Transaction</button>
+    <button class="button is-primary is-large is-rounded" id="add-transaction" style="margin: 1rem auto;">Add Transaction</button>
 </div>
 
-<div id="add-transaction-modal" class="modal">
+<div id="add-transaction-modal" class="modal" style="border-radius: 1rem;">
   <div class="modal-background"></div>
   <div class="modal-content">
     <div class="box">
@@ -15,14 +15,14 @@
         <div class="field">
           <label class="label">Date</label>
           <div class="control">
-            <input class="input" type="date" name="date" required>
+            <input autocomplete="off" class="input" type="date" name="date">
           </div>
         </div>
 
         <div class="field">
           <label class="label">Description</label>
           <div class="control">
-            <input class="input" type="text" name="description" placeholder="Description" required>
+            <input autocomplete="off" class="input" type="text" name="description" placeholder="Description" required>
           </div>
         </div>
 
@@ -33,7 +33,7 @@
               <select name="category" required>
                 <option disabled selected value>Select Category</option>
                 {% for category in categories %}
-                <option value="{{ category.name }}">{{ category.name }}</option>
+                <option value="{{ category.id }}">{{ category.name }}</option>
                 {% endfor %}
               </select> 
               </div>             
@@ -43,7 +43,7 @@
         <div class="field">
           <label class="label">Amount</label>
           <div class="control">
-            <input class="input" type="number" step="0.01" name="amount" placeholder="Amount" required>
+            <input autocomplete="off" class="input" type="number" step="0.01" name="amount" placeholder="Amount" required>
           </div>
         </div>
 
@@ -54,8 +54,20 @@
               <select name="account_id" required>
                 <option disabled selected value>Select Account</option>
                 {% for account in accounts %}
-                <option value="{{ account.id }}">{{ account.name }}</option>
+                <option value="{{ account.id }}">{{ account.account_name }}</option>
                 {% endfor %}
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Transaction Type</label>
+          <div class="control">
+            <div class="select is-fullwidth">
+              <select name="transaction_type">
+                <option value="income">Income</option>
+                <option selected value="expense">Expense</option>
               </select>
             </div>
           </div>
@@ -74,8 +86,28 @@
   </div>
 </div>
 
-<div class="container">
-    <table class="table is-fullwidth is-striped is-hoverable" style="margin-top: 2rem;">
+<div style="text-align: right; margin-right: 4rem; margin-bottom: 1rem;">
+<div class="dropdown is-hoverable">
+  <div class="dropdown-trigger">
+    <button class="button" aria-haspopup="true" aria-controls="dropdown-menu4">
+      <span>Sort By <strong>V</strong></span>
+    </button>
+  </div>
+  <div class="dropdown-menu" id="dropdown-menu4" role="menu" style="text-align: center;">
+    <div class="dropdown-content">
+      <a class="dropdown-item" id="1" href="{{ url_for('transactions', sort_by='date_desc')}}">Date (Newest)</a>
+      <a class="dropdown-item" id="2" href="{{ url_for('transactions', sort_by='date_asc')}}">Date (Oldest)</a>
+      <a class="dropdown-item" id="3" href="{{ url_for('transactions', sort_by='category')}}">Category</a>
+      <a class="dropdown-item" id="4" href="{{ url_for('transactions', sort_by='amount_asc')}}">Amount (Highest)</a>
+      <a class="dropdown-item" id="5" href="{{ url_for('transactions', sort_by='amount_desc')}}">Amount (Least)</a>
+      <a class="dropdown-item" id="6" href="{{ url_for('transactions', sort_by='account')}}">Account</a>
+      <a class="dropdown-item" id="7" href="{{ url_for('transactions', sort_by='type')}}">Type</a>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container" style="padding: .5rem;">
+    <table class="table is-fullwidth is-striped is-hoverable" style="margin-bottom: 1rem; margin-top: 1rem; text-align: center;">
         <thead>
             <tr>
                 <th>Date</th>
@@ -86,13 +118,13 @@
             </tr>
         </thead>
         <tbody>
-            {% for transaction in transactions %}
+            {% for transaction, account, category in transactions %}
             <tr>
-                <td>{{ transaction.date }}</td>
+                <td>{{ transaction.transaction_date.strftime("%Y-%m-%d") }}</td>
                 <td>{{ transaction.description }}</td>
-                <td>{{ transaction.category }}</td>
-                <td>${{ '%.2f'|format(transaction.amount) }}</td>
-                <td>{{ transaction.account_name }}</td>
+                <td>{{ category.name }}</td>
+                <td>{{ usd(transaction.amount, transaction.transaction_type) }}</td>
+                <td>{{ account.account_name }}</td>
             </tr>
             {% endfor %}
         </tbody>
@@ -100,6 +132,11 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
+
+    const selectedSort = document.getElementById('{{ flag }}')
+
+    selectedSort.classList.add('is-active')
+
     const addTransactionButton = document.getElementById('add-transaction');
     const modal = document.getElementById('add-transaction-modal');
     const cancelButton = document.getElementById('cancel-button');

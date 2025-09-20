@@ -2,7 +2,7 @@
 {% block content %}
 <div style="text-align: center; margin-top: 1rem;">
     <h1 class="title">My Accounts</h1>
-    <button id="add-account-button" class="button is-primary is-rounded is-large" style="margin-top: 1rem;">Add Account</button>
+    <button id="add-account-button" class="button is-primary is-rounded is-large" style="margin: 1rem;">Add Account</button>
 </div>
 
 <div id="add-account-modal" class="modal" style="border-radius: 1rem;">
@@ -14,14 +14,14 @@
         <div class="field">
           <label class="label">Account Name</label>
           <div class="control">
-            <input class="input" type="text" name="account_name" placeholder="Account Name" required>
+            <input autocomplete="off" class="input" type="text" name="account_name" placeholder="Account Name" required>
           </div>
         </div>
 
         <div class="field">
           <label class="label">Balance</label>
           <div class="control">
-            <input class="input" type="number" name="balance" placeholder="Balance" required>
+            <input autocomplete="off" class="input" type="number" name="balance" placeholder="Balance" required>
           </div>
         </div>
 
@@ -38,7 +38,7 @@
     </div>
   </div>
 </div>
-<div class="container">
+<div class="container" style="border-bottom-left-radius: 0; border-bottom-right-radius: 0;">
   <table class="table is-fullwidth is-striped is-hoverable" style="margin-top: 2rem;">
       <thead>
           <tr>
@@ -51,9 +51,8 @@
           {% for account in accounts %}
           <tr>
               <td>{{ account.account_name }}</td>
-              <td>${{ '%.2f'|format(account.balance) }}</td>
+              <td>{{ usd(account.balance, None) }}</td>
               <td>
-                  <a class="button is-small is-info is-rounded" href="/edit_account/{{ account.id }}">Edit</a>
                   <a class="button is-small is-danger is-rounded" href="/delete_account/{{ account.id }}">Delete</a>
               </td>
           </tr>

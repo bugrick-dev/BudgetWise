@@ -9,6 +9,10 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated_function
 
-def usd(value):
+def usd(value, type):
     """Format value as USD."""
+
+    if type == "expense":
+        return f"-${value:,.2f}"
+
     return f"${value:,.2f}"
