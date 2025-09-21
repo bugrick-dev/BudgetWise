@@ -28,19 +28,12 @@ BudgetWise helps you **log transactions, categorize expenses, visualize spending
 ## 📂 Project Structure
 budgetwise/  
 │── app.py # Flask app  
-│── helpers.py # Utility functions (auth, db, etc.)  
-│── requirements.txt # Dependencies  
-│── budgetwise.db # SQLite database  
-│── templates/ # HTML templates (Jinja2)  
-│ ├── layout.html  
-│ ├── index.html # Dashboard  
-│ ├── login.html  
-│ ├── register.html  
-│ ├── add_transaction.html  
-│ └── upload_csv.html  
-│── static/ # CSS, JS, images  
-│ ├── styles.css  
-│ └── charts.js  
+│── helpers.py # Utility functions  
+│── requirements.txt # Dependencies    
+│── screenshots/ # Screenshots    
+│── templates/ # HTML templates (Jinja2)    
+└── static/ # CSS, images  
+  
 
 ---
 
@@ -62,10 +55,7 @@ budgetwise/
     ```
 4. **Initialize database**  
     ```bash
-        flask shell
-    >>> from app import init_db
-    >>> init_db()
-    >>> exit()
+    flask init-db
     ```
 5. **Run Server**  
     ```bash
