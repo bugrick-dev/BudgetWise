@@ -3,6 +3,8 @@ from flask_session import Session
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import click
+from flask.cli import with_appcontext
 
 from helpers import login_required, usd
 
@@ -67,6 +69,40 @@ def after_request(response):
     response.headers["Expires"] = 0
     response.headers["Pragma"] = "no-cache"
     return response
+
+#Initializing categories
+def add_default_categories():
+    """Checks for and adds default categories to the database."""
+    # Define your default categories here
+    default_categories = ['Groceries', 'Food', 'Rent', 'Transportation', 'Entertainment', 'Lifestyle', 'Luxury']
+    
+    print("Checking for default categories...")
+    for category_name in default_categories:
+        # Check if the category already exists to avoid duplicates
+        exists = Category.query.filter_by(name=category_name).first()
+        if not exists:
+            # If it doesn't exist, create and add it
+            new_category = Category(name=category_name)       #pyright: ignore
+            db.session.add(new_category)
+            print(f"Added category: '{category_name}'")
+        else:
+            print(f"Category '{category_name}' already exists.")
+            
+    db.session.commit()
+    print("Default category check complete.")
+
+@click.command(name='init-db')
+@with_appcontext
+def init_db_command():
+    """Clear existing data and create new tables and default categories."""
+
+    db.drop_all()
+    db.create_all()
+    
+    add_default_categories() # Add the default categories
+    click.echo('Initialized the database with default categories.')
+
+app.cli.add_command(init_db_command)
 
 #Index Route
 @app.route("/")
@@ -352,10 +388,8 @@ def delete_account(account_id):
     return redirect(url_for("accounts"))
 
 
-# Function to initialize the database
-def init_db():
-    db.create_all()
-    return
+
+
 
 if __name__ == "__main__":
     app.run(debug=False)
