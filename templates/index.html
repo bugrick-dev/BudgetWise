@@ -8,7 +8,7 @@
                 <!-- Left Column for Charts -->
                 <div class="column is-one-half-desktop is-full-mobile is-flex is-flex-direction-column">
                     <div class="box is-flex is-flex-grow-1">
-                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin-top: 1rem;">
+                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin-top: 1rem; min-height: 300px;">
                             {% if flag %}
                             <canvas id="donutChart"></canvas>
                             {% else %}
@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="box is-flex is-flex-grow-1">
-                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin-top: 1rem;">
+                        <div class="is-flex" style="justify-content: center; align-items: center; width: 100%; height: 90%; margin: 0; margin-top: 1rem; min-height: 200px;">
                             {% if flag %}
                             <canvas id="lineChart"></canvas>
                             {% else %}
@@ -39,10 +39,10 @@
                     </div>
 
                     <!-- Transactions Table -->
-                    <div class="box" id="transactions-table" style="text-align: left;">
+                    <div class="box is-flex is-flex-direction-column is-flex-grow-1" id="transactions-table" style="align-items: center; text-align: left;">
                         <h1 class="subtitle">Recent Transactions</h1>
                         {% if flag %}
-                        <table class="table is-fullwidth is-striped is-hoverable" style="text-align: center;">
+                        <table class="table is-fullwidth is-striped is-hoverable" style="height: 80%; text-align: center;">
                             <tbody>
                                 {% for account, transaction in transactions  %}
                                     <tr>
@@ -83,10 +83,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 'rgba(210, 160, 120, 0.85)',
                 'rgba(235, 215, 190, 0.85)'
                 ],
-                hoverOffset: 4
+                hoverOffset: 4,
             }]
+        },
+        options: {
+            plugins: {
+                legend: {
+                    display: false,
                 }
             }
+        }
+    },
         );
 
         const lineChartData = JSON.parse('{{ lineChartData | tojson }}')

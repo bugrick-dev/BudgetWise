@@ -2,6 +2,9 @@
 A simple **personal finance tracker** built with Flask, SQLite, and Chart.js.  
 BudgetWise helps you **log transactions, categorize expenses, and visualize spending trends**.  
 
+## Video demo https://youtu.be/QaGPdCwhGLs
+
+
 ![Welcome Page](screenshots/welcome.png)
 
 ---

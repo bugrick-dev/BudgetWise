@@ -74,19 +74,15 @@ def after_request(response):
 def add_default_categories():
     """Checks for and adds default categories to the database."""
     # Define your default categories here
-    default_categories = ['Groceries', 'Food', 'Rent', 'Transportation', 'Entertainment', 'Lifestyle', 'Luxury']
+    default_categories = ['Groceries', 'Food', 'Rent', 'Transportation', 'Entertainment', 'Lifestyle', 'Luxury', 'Other']
     
     print("Checking for default categories...")
     for category_name in default_categories:
-        # Check if the category already exists to avoid duplicates
-        exists = Category.query.filter_by(name=category_name).first()
-        if not exists:
-            # If it doesn't exist, create and add it
-            new_category = Category(name=category_name)       #pyright: ignore
-            db.session.add(new_category)
-            print(f"Added category: '{category_name}'")
-        else:
-            print(f"Category '{category_name}' already exists.")
+
+        new_category = Category(name=category_name)       #pyright: ignore
+        db.session.add(new_category)
+        print(f"Added category: '{category_name}'")
+
             
     db.session.commit()
     print("Default category check complete.")
@@ -110,7 +106,7 @@ def index():
     user = None
     if 'user_id' in session:
         user = User.query.get(session['user_id'])
-        accounts = Account.query.filter_by(user_id=user.id).all()                   #pyright: ignore
+        accounts = Account.query.filter_by(user_id=user.id).all()                   #pyright: ignore[reportOptionalMemberAccess]     
         flag = None
         if Transaction.query.filter_by(user_id=user.id).all():                      #pyright: ignore
             flag = 1
@@ -183,7 +179,7 @@ def signup():
 @app.route("/login", methods=["GET", "POST"])
 def login():
 
-    session.clear()
+    
 
     if request.method == "POST":
         username = request.form.get("username")
@@ -197,6 +193,7 @@ def login():
         if user is None or not check_password_hash(user.password_hash, password):
             return render_template("login.html", error="Invalid username or password")
 
+        session.clear()
         session["user_id"] = user.id
         session["username"] = user.username
 
@@ -249,15 +246,15 @@ def settings():
 @app.route("/delete_user", methods=["POST"])
 @login_required
 def delete_user():
-    user_id = session.get("user_id")
-    if user_id:
-        user = User.query.get(user_id)
-        if user:
-            db.session.delete(user)
-            db.session.commit()
-            session.clear()
-            return redirect(url_for("index"))
-    return redirect(url_for("settings"))
+
+    user = User.query.get(session.get("user_id"))
+    db.session.delete(user)
+    db.session.commit()
+    session.clear()
+    return redirect(url_for("index"))
+
+
+
 
 
 # Transactions Route
@@ -319,8 +316,6 @@ def add_transaction():
     try:
         account = Account.query.filter_by(id=account_id).first()
         
-
-
         new_transaction = Transaction(user_id=user_id,                  #pyright: ignore
                                     account_id=account_id,              #pyright: ignore    
                                     amount=amount,                      #pyright: ignore    
@@ -386,9 +381,6 @@ def delete_account(account_id):
         return redirect(url_for("accounts"))  
     flash("Account Delete Error", "danger")
     return redirect(url_for("accounts"))
-
-
-
 
 
 if __name__ == "__main__":
