@@ -7,8 +7,7 @@ With **user authentication, expense categorization, and interactive data visuali
 
 ---
 
-## 🎥 Video Demo  
-See BudgetWise in action here: **[YouTube Demo](https://youtu.be/QaGPdCwhGLs)**  
+## 🎥 Video Demo (https://youtu.be/QaGPdCwhGLs)
 
 ![Welcome Page](screenshots/welcome.png)
 
